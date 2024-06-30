@@ -8,11 +8,10 @@ data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long?,
-    var name: String,
-    /*var surname: String?,
-    var email: String?,
+    var fullName: String,
+    var email: String,
     var password: String?,
     var metaApiKey: String?,
-    var facebookApiKey: String?,
-    var googleApiKey: String?,*/
+    var googleApiKey: String?,
+    var profilePicture: String?,
 )

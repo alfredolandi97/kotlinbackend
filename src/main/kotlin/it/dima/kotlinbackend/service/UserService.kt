@@ -14,14 +14,14 @@ class UserService(val userRepository: UserRepository) {
     fun addUser(userDTO: UserDTO): UserDTO{
 
         val userEntity = userDTO.let{
-            User(null, it.name)
+            User(null, it.fullName, it.email, it.password, it.metaApiKey, it.googleApiKey, it.profilePicture)
         }
         userRepository.save(userEntity)
 
         logger.info("Saved course is $userEntity")
 
         return userEntity.let {
-            UserDTO(it.id, it.name)
+            UserDTO(it.id, it.fullName, it.email, it.password, it.metaApiKey, it.googleApiKey, it.profilePicture)
         }
     }
 }
