@@ -47,4 +47,58 @@ class FavoritesService(val userService: UserService, val seriesRepository: Serie
             FollowDTO(it.users.last().id!!, it.seriesId)
         }
     }
+
+    fun retrieveAllFavoritesByUserId(userId: Long): List<Long> {
+        val user = userService.findByUserId(userId)
+        if(user.isPresent){
+            return user.get().series.map {
+                it.seriesId
+            }
+        }else{
+            //TO-DO: Custom exception
+            throw Exception("User not found")
+        }
+    }
+
+    fun deleteFavorite(userId: Long, seriesId: Long) {
+        //Check User Validity
+        val userOptional = userService.findByUserId(userId)
+        val userEntity: User
+        if(!userOptional.isPresent){
+            //TO-DO Custom Exception
+            throw Exception("User not found")
+        }else{
+            userEntity = userOptional.get()
+        }
+
+        //Check Series Validaty
+        val seriesOptional = seriesRepository.findById(seriesId)
+        //LEGACY CODE!!"
+        //val seriesEntity: Series
+        if(!seriesOptional.isPresent){
+            //TO-DO Custom Exception
+            throw Exception("Series not found")
+        }
+        //LEGACY CODE!!!
+        /*else{
+            seriesEntity = seriesOptional.get()
+        }*/
+
+        //Updating User
+        userEntity.series.remove(
+            userEntity.series.filter{ it.seriesId==seriesId }
+                .first()
+        )
+        userService.updateUser(userEntity)
+
+        //LEGACY CODE!!!
+        /*logger.info("targer series to string " + seriesEntity.toString())
+        //Updating Series
+        seriesEntity.users.remove(
+            seriesEntity.users.filter{ it.id!!.toLong()==userId }
+                .first()
+        )
+        seriesRepository.save(seriesEntity)*/
+
+    }
 }

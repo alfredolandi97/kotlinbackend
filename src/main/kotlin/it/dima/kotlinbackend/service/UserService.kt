@@ -15,7 +15,15 @@ class UserService(val userRepository: UserRepository) {
 
     fun addUser(userDTO: UserDTO): UserDTO{
         if(userDTO.meta_api_key != null || userDTO.google_api_key!= null) {
-            val userOptional = userRepository.findByExternalKey(userDTO.meta_api_key, userDTO.google_api_key)
+            var userOptional: Optional<User>
+            if (userDTO.meta_api_key != null){
+                userOptional = userRepository.findByMetaApiKeyContaining(userDTO.meta_api_key)
+            }else if(userDTO.google_api_key != null){
+                userOptional = userRepository.findByGoogleApiKeyContaining(userDTO.google_api_key)
+            }else{
+                throw Exception("ApiKey Not Valid for the Id: ${userDTO.id}")
+            }
+
             if (userOptional.isPresent) {
                 return userOptional.get().let {
                     UserDTO(

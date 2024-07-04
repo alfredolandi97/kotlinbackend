@@ -11,6 +11,9 @@ import java.util.*
 interface UserRepository: CrudRepository<User, Long> {
     fun findByEmailAndPasswordContaining(email: String, password: String): User
 
-    @Query(value="SELECT * FROM user WHERE meta_api_key = 1 or google_api_key = 2", nativeQuery = true)
-    fun findByExternalKey(meta_api_key: String?, google_api_key: String?): Optional<User>
+    @Query(value="SELECT * FROM seriestime_user WHERE meta_api_key = ?1", nativeQuery = true)
+    fun findByMetaApiKeyContaining(meta_api_key: String): Optional<User>
+
+    @Query(value="SELECT * FROM seriestime_user WHERE google_api_key = ?1", nativeQuery = true)
+    fun findByGoogleApiKeyContaining(google_api_key: String): Optional<User>
 }
