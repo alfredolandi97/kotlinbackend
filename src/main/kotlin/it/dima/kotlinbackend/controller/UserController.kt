@@ -16,4 +16,12 @@ class UserController(val userService: UserService) {
     fun addUser(@RequestBody @Valid userDTO: UserDTO): UserDTO{
         return userService.addUser(userDTO)
     }
+
+    @GetMapping
+    fun retrieveUser(
+        @RequestParam("email", required = true) email: String,
+        @RequestParam("password", required = true) password: String
+    ): UserDTO = userService.retrieveUser(email, password)
+
+
 }

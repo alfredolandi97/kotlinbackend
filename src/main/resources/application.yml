@@ -1,6 +1,6 @@
 spring:
   application:
-    name: course-catalog-service
+    name: dima-user-backend
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://dima-db.cdw00ck0wa6r.eu-north-1.rds.amazonaws.com:5432/seriestime
