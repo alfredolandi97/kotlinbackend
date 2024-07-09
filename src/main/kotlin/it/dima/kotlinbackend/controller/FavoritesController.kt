@@ -16,7 +16,7 @@ class FavoritesController(val favoritesService: FavoritesService) {
     fun addCourse(@RequestBody @Valid followDTO: FollowDTO): FollowDTO {
         return favoritesService.addFavoriteSeries(followDTO)
     }
-    
+
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     fun deleteFavorite(@RequestParam("user_id", required = true) userId: Long, @RequestParam("series_id", required = true) seriesId: Long) = favoritesService.deleteFavorite(userId, seriesId)

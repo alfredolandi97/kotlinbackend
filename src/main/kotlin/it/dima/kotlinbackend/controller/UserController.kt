@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class UserController(val userService: UserService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addUser(@RequestBody @Valid userDTO: UserDTO): UserDTO{
+    fun addUser(@RequestBody @Valid userDTO: UserDTO): UserDTO {
         return userService.addUser(userDTO)
     }
 
