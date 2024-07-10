@@ -2,6 +2,9 @@ package it.dima.kotlinbackend.service
 
 import it.dima.kotlinbackend.dto.UserDTO
 import it.dima.kotlinbackend.entity.User
+import it.dima.kotlinbackend.exception.InvalidSubscriptionException
+import it.dima.kotlinbackend.exception.UserNotFoundException
+import it.dima.kotlinbackend.exception.UserNotValidException
 import it.dima.kotlinbackend.repository.UserRepository
 import mu.KLogging
 import org.springframework.stereotype.Service
@@ -21,8 +24,7 @@ class UserService(val userRepository: UserRepository) {
             }else if(userDTO.google_api_key != null){
                 userOptional = userRepository.findByGoogleApiKeyContaining(userDTO.google_api_key)
             }else{
-                //TO-DO: Custom exception
-                throw Exception("ApiKey Not Valid for the Id: ${userDTO.id}")
+                throw UserNotValidException("Unrecognized user for this api key")
             }
 
             if (userOptional.isPresent) {
@@ -41,21 +43,18 @@ class UserService(val userRepository: UserRepository) {
         }else{
             //Checking password field validity for custom subscription
             if(userDTO.password == null){
-                //TO-DO: Custom exception
-                throw Exception("Password cannot be null")
+                throw InvalidSubscriptionException("Password cannot be unspecified")
             }
 
             //Checking if all the fields are valid
             if(userDTO.full_name.isEmpty() || userDTO.email.isEmpty() || userDTO.password.isEmpty()){
-                //TO-DO: Custom exception
-                throw Exception("Invalid subscription fields")
+                throw InvalidSubscriptionException("Invalid subscription fields")
             }
             val userResult = userRepository.findByEmailContaining(userDTO.email)
 
             //Checking if email is already taken or not
             if(userResult.isPresent){
-                //TO-DO: Custom exception
-                throw Exception("Email already taken")
+                throw InvalidSubscriptionException("Email already taken")
             }
         }
 
@@ -97,8 +96,7 @@ class UserService(val userRepository: UserRepository) {
         val userOptional = userRepository.findByEmailAndPasswordContaining(credentials["email"].toString(), credentials["password"].toString())
         val userEntity: User
         if(!userOptional.isPresent){
-            //TO-DO Custom Exception
-            throw Exception("User not found")
+            throw UserNotFoundException("User not found for credentials email: ${credentials["email"]}, password: ${credentials["password"]}")
         }else{
             userEntity = userOptional.get()
         }

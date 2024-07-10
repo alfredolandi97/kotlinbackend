@@ -3,6 +3,9 @@ package it.dima.kotlinbackend.service
 import it.dima.kotlinbackend.dto.FollowDTO
 import it.dima.kotlinbackend.entity.Series
 import it.dima.kotlinbackend.entity.User
+import it.dima.kotlinbackend.exception.SeriesNotFoundException
+import it.dima.kotlinbackend.exception.UserNotFoundException
+import it.dima.kotlinbackend.exception.UserNotValidException
 import it.dima.kotlinbackend.repository.SeriesRepository
 import mu.KLogging
 import org.springframework.stereotype.Service
@@ -15,8 +18,7 @@ class FavoritesService(val userService: UserService, val seriesRepository: Serie
         val userOptional = userService.findByUserId(followDTO.userId)
 
         if(!userOptional.isPresent){
-            //TO-D0: Ad-hoc exception
-            throw Exception("User Not Valid for the Id: ${followDTO.userId}")
+            throw UserNotFoundException("User Not Found for the Id: ${followDTO.userId}")
         }
 
         val seriesOptional = seriesRepository.findById(followDTO.seriesId)
@@ -55,8 +57,7 @@ class FavoritesService(val userService: UserService, val seriesRepository: Serie
                 it.seriesId
             }
         }else{
-            //TO-DO: Custom exception
-            throw Exception("User not found")
+            throw UserNotValidException("Invalid User to retrieve favorites")
         }
     }
 
@@ -65,8 +66,7 @@ class FavoritesService(val userService: UserService, val seriesRepository: Serie
         val userOptional = userService.findByUserId(userId)
         val userEntity: User
         if(!userOptional.isPresent){
-            //TO-DO Custom Exception
-            throw Exception("User not found")
+            throw UserNotFoundException("User $userId does not exist, unable to delete this favorite")
         }else{
             userEntity = userOptional.get()
         }
@@ -76,8 +76,7 @@ class FavoritesService(val userService: UserService, val seriesRepository: Serie
         //LEGACY CODE!!"
         //val seriesEntity: Series
         if(!seriesOptional.isPresent){
-            //TO-DO Custom Exception
-            throw Exception("Series not found")
+            throw SeriesNotFoundException("Series $seriesId does not exist, unable to delete this favorite")
         }
         //LEGACY CODE!!!
         /*else{
