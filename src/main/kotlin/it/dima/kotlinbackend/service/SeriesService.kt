@@ -28,6 +28,7 @@ class SeriesService {
                 it.tvShow.id,
                 it.tvShow.name,
                 it.tvShow.description,
+                it.tvShow.start_date,
                 it.tvShow.status,
                 it.tvShow.network,
                 it.tvShow.image_thumbnail_path,

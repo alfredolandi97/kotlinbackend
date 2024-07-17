@@ -6,6 +6,7 @@ data class SeriesDTO(
     val id: Long,
     val name: String?,
     val description: String?,
+    val startDate: String?,
     val status: String?,
     val network: String?,
     val thumbnail: String?,
