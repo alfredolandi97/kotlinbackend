@@ -11,7 +11,7 @@ data class Episode(
 )
 
 data class Details(
-    val id: Long,
+    val id: Long?,
     val name: String?,
     val permalink: String?,
     val url: String?,

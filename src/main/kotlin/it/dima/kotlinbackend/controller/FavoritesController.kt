@@ -1,6 +1,7 @@
 package it.dima.kotlinbackend.controller
 
 import it.dima.kotlinbackend.dto.FollowDTO
+import it.dima.kotlinbackend.dto.SeriesDTO
 import it.dima.kotlinbackend.service.FavoritesService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -22,6 +23,6 @@ class FavoritesController(val favoritesService: FavoritesService) {
     fun deleteFavorite(@RequestParam("user_id", required = true) userId: Long, @RequestParam("series_id", required = true) seriesId: Long) = favoritesService.deleteFavorite(userId, seriesId)
 
     @GetMapping
-    fun retrieveAllFavoritesByUserId(@RequestParam("user_id", required = true) userId: Long): List<Long> = favoritesService.retrieveAllFavoritesByUserId(userId)
+    fun retrieveAllFavoritesByUserId(@RequestParam("user_id", required = true) userId: Long): List<SeriesDTO> = favoritesService.retrieveAllFavoritesByUserId(userId)
 
 }

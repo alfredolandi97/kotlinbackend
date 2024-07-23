@@ -1,6 +1,7 @@
 package it.dima.kotlinbackend.service
 
 import it.dima.kotlinbackend.dto.FollowDTO
+import it.dima.kotlinbackend.dto.SeriesDTO
 import it.dima.kotlinbackend.entity.Series
 import it.dima.kotlinbackend.entity.User
 import it.dima.kotlinbackend.exception.SeriesNotFoundException
@@ -11,7 +12,7 @@ import mu.KLogging
 import org.springframework.stereotype.Service
 
 @Service
-class FavoritesService(val userService: UserService, val seriesRepository: SeriesRepository) {
+class FavoritesService(val userService: UserService, val seriesService: SeriesService, val seriesRepository: SeriesRepository) {
     companion object: KLogging()
 
     fun addFavoriteSeries(followDTO: FollowDTO): FollowDTO {
@@ -50,11 +51,11 @@ class FavoritesService(val userService: UserService, val seriesRepository: Serie
         }
     }
 
-    fun retrieveAllFavoritesByUserId(userId: Long): List<Long> {
+    fun retrieveAllFavoritesByUserId(userId: Long): List<SeriesDTO> {
         val user = userService.findByUserId(userId)
         if(user.isPresent){
             return user.get().series.map {
-                it.seriesId
+                seriesService.getSeriesById(it.seriesId)
             }
         }else{
             throw UserNotValidException("Invalid User to retrieve favorites")

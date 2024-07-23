@@ -3,7 +3,7 @@ package it.dima.kotlinbackend.dto
 import it.dima.kotlinbackend.utils.Episode
 
 data class SeriesDTO(
-    val id: Long,
+    val id: Long?,
     val name: String?,
     val description: String?,
     val startDate: String?,
