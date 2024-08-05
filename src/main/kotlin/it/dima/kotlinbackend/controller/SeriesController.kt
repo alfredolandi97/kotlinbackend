@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1/series")
 @Validated
 class SeriesController(val seriesService: SeriesService) {
-    @GetMapping("id")
+    @GetMapping
     fun getSeriesById(@RequestParam("series_id", required = true) seriesId: Long): SeriesDTO = seriesService.getSeriesById(seriesId)
 
     @GetMapping("most_popular")
     fun getMostPopular(): List<SeriesDTO> = seriesService.getMostPopular()
 
-    @GetMapping("query")
-    fun getSeriesByQuery(@RequestParam("q", required = true) query: String): SeriesDTO = seriesService.getSeriesByQuery(query)
+    @GetMapping("search")
+    fun getSeriesByQuery(@RequestParam("q", required = true) query: String): List<SeriesDTO> = seriesService.getSeriesByQuery(query)
 }

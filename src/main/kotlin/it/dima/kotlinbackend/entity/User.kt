@@ -1,7 +1,6 @@
 package it.dima.kotlinbackend.entity
 
 import jakarta.persistence.*
-import javax.sound.midi.Track
 
 @Entity
 @Table(name = "seriestime_user")
@@ -24,5 +23,13 @@ data class User(
         inverseJoinColumns = arrayOf(JoinColumn(name = "series_id"))
     )
     val series: MutableList<Series> = mutableListOf(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "watch",
+        joinColumns = arrayOf(JoinColumn(name = "user_id")),
+        inverseJoinColumns = arrayOf(JoinColumn(name = "season"), JoinColumn(name = "episode"), JoinColumn(name = "series_id"))
+    )
+    val episodes: MutableList<Episode> = mutableListOf(),
 
 )

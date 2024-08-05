@@ -3,34 +3,29 @@ package it.dima.kotlinbackend.entity
 import jakarta.persistence.*
 import java.io.Serializable
 
-/*internal class EpisodeCompositeKey : Serializable {
-    private val season = -1
-    private val episode = -1
-
-    companion object {
-        private const val serialVersionUID = 1L
-    }
-}*/
-
-data class EpisodeCompositeKey(
-    val season: Int,
-    val episode: Int,
-)
+@Embeddable
+class EpisodeCompositeKey(
+    val season:Int,
+    val episode:Int,
+    @Column(name = "series_id",)
+    val seriesId: Long,
+): Serializable
 
 @Entity
-@IdClass(EpisodeCompositeKey::class)
 data class Episode(
 
-    @Id
-    val season: Int,
-    @Id
-    val episode: Int,
+    @EmbeddedId
+    val id:EpisodeCompositeKey,
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "INSTRUCTOR_ID", nullable = false)
-    val series: Series? = null
+    @JoinColumn(name = "series_id", referencedColumnName = "series_id", nullable = false, insertable=false, updatable=false)
+    val series: Series,
+
+    @ManyToMany(mappedBy = "episodes")
+    val users: MutableList<User> = mutableListOf(),
 ){
     override fun toString(): String {
-        return "Episode(season=$season, episode=$episode, series='${series!!.seriesId}')"
+        return "Episode(season=${id.season}, episode=${id.episode}, series='${series!!.seriesId}')"
     }
 }

@@ -67,7 +67,7 @@ class FavoritesService(val userService: UserService, val seriesService: SeriesSe
         val userOptional = userService.findByUserId(userId)
         val userEntity: User
         if(!userOptional.isPresent){
-            throw UserNotFoundException("User $userId does not exist, unable to delete this favorite")
+            throw UserNotFoundException("User does not exist, unable to delete this favorite")
         }else{
             userEntity = userOptional.get()
         }
@@ -77,7 +77,7 @@ class FavoritesService(val userService: UserService, val seriesService: SeriesSe
         //LEGACY CODE!!"
         //val seriesEntity: Series
         if(!seriesOptional.isPresent){
-            throw SeriesNotFoundException("Series $seriesId does not exist, unable to delete this favorite")
+            throw SeriesNotFoundException("This series seems not to exist, unable to delete this favorite")
         }
         //LEGACY CODE!!!
         /*else{

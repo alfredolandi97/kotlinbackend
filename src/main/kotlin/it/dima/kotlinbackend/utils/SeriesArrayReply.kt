@@ -15,7 +15,7 @@ data class MostPopularDetails(
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MostPopularReply(
+data class SeriesArrayReply(
     val total: String,
     val page: Long,
     val pages: Long,
