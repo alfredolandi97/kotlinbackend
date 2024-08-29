@@ -9,6 +9,6 @@ jobs:
   tester:
     runs-on: ubuntu-latest
 
-steps:
-  - name: Hello step
-    run: echo "Hello World"
+    steps:
+      - name: Hello step
+        run: echo "Hello World"
