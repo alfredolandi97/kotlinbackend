@@ -109,10 +109,6 @@ class UserService(val userRepository: UserRepository) {
 
     }
 
-    fun retrieveProfilePicture(userId: Long): String?{
-        return userRepository.findImageByUserId(userId)
-    }
-
     fun findByUserId(userId: Long): Optional<User> {
         return userRepository.findById(userId)
     }
@@ -122,7 +118,7 @@ class UserService(val userRepository: UserRepository) {
     }
 
     fun updateProfilePicture(imageDTO: ImageDTO) {
-        val userOptional = findByUserId(imageDTO.userId)
+        val userOptional = findByUserId(imageDTO.userId.toLong())
 
         if(!userOptional.isPresent){
             throw UserNotFoundException("User not found")

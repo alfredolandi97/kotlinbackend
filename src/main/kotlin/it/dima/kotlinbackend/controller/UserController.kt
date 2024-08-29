@@ -24,12 +24,6 @@ class UserController(val userService: UserService) {
         @RequestParam("password", required = true) password: String
     ): UserDTO = userService.retrieveUser(email, password)
 
-
-    @GetMapping("image")
-    fun retrieveProfilePicture(
-        @RequestParam("user_id", required = true) userId: Long
-    ): String? = userService.retrieveProfilePicture(userId)
-
     @PostMapping("image")
     @ResponseStatus(HttpStatus.OK)
     fun updateProfilePicture(@RequestBody @Valid imageDTO: ImageDTO){
