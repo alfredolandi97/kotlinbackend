@@ -27,6 +27,11 @@ class WatchedController(val watchedService: WatchedService) {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    fun deleteWatchedEpisode(@RequestBody @Valid watchedDTO: WatchedDTO)
-        = watchedService.deleteWatchedService(watchedDTO)
+    fun deleteWatchedEpisode(
+        @RequestParam("user_id", required = true) userId: Long,
+        @RequestParam("series_id", required = true) seriesId: Long,
+        @RequestParam("season", required = true) season: Int,
+        @RequestParam("episode", required = true) episode: Int,
+    )
+        = watchedService.deleteWatchedService(userId, seriesId, season, episode)
 }

@@ -28,7 +28,7 @@ data class User(
     @JoinTable(
         name = "watch",
         joinColumns = arrayOf(JoinColumn(name = "user_id")),
-        inverseJoinColumns = arrayOf(JoinColumn(name = "season"), JoinColumn(name = "episode"), JoinColumn(name = "series_id"))
+        inverseJoinColumns = arrayOf(JoinColumn(name = "episode"), JoinColumn(name = "season"), JoinColumn(name = "series_id"))
     )
     val episodes: MutableList<Episode> = mutableListOf(),
 

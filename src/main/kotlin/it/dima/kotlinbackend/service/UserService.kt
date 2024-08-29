@@ -1,5 +1,6 @@
 package it.dima.kotlinbackend.service
 
+import it.dima.kotlinbackend.dto.ImageDTO
 import it.dima.kotlinbackend.dto.UserDTO
 import it.dima.kotlinbackend.entity.User
 import it.dima.kotlinbackend.exception.InvalidSubscriptionException
@@ -108,11 +109,27 @@ class UserService(val userRepository: UserRepository) {
 
     }
 
+    fun retrieveProfilePicture(userId: Long): String?{
+        return userRepository.findImageByUserId(userId)
+    }
+
     fun findByUserId(userId: Long): Optional<User> {
         return userRepository.findById(userId)
     }
 
     fun updateUser(user: User) {
         userRepository.save(user)
+    }
+
+    fun updateProfilePicture(imageDTO: ImageDTO) {
+        val userOptional = findByUserId(imageDTO.userId)
+
+        if(!userOptional.isPresent){
+            throw UserNotFoundException("User not found")
+        }else{
+            val userEntity = userOptional.get()
+            userEntity.profile_picture = imageDTO.profilePicture
+            updateUser(userEntity)
+        }
     }
 }

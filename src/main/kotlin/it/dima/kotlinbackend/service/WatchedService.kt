@@ -66,32 +66,33 @@ class WatchedService(val userService: UserService, val seriesService: SeriesServ
         }
     }
 
-    fun deleteWatchedService(watchedDTO: WatchedDTO){
+    fun deleteWatchedService(userId: Long, seriesId: Long, season: Int, episode: Int){
         //Check User Validity
-        val userOptional = userService.findByUserId(watchedDTO.userId)
+        val userOptional = userService.findByUserId(userId)
         val userEntity: User
         if(!userOptional.isPresent){
-            throw UserNotFoundException("User ${watchedDTO.userId} does not exist, unable to delete this favorite")
+            throw UserNotFoundException("This user seems it does not exist, unable to delete this favorite")
         }else{
             userEntity = userOptional.get()
         }
 
         //Check Series Validaty
-        val seriesOptional = seriesService.findSeriesById(watchedDTO.seriesId)
+        val seriesOptional = seriesService.findSeriesById(seriesId)
         if(!seriesOptional.isPresent){
             throw SeriesNotFoundException("This series seems not to exist, unable to delete this watched episode")
         }
 
         //Check episode validity
-        val episodeOptional = episodeService.findEpisodeByCompositeKey(watchedDTO.seriesId, watchedDTO.season, watchedDTO.episode)
+        val episodeOptional = episodeService.findEpisodeByCompositeKey(seriesId, season, episode)
+
         if(!episodeOptional.isPresent){
             throw EpisodeNotFoundException("This episode seems not to exist, unable to delete this watched episode")
         }
 
         val episodes = userEntity.episodes.filter{
-            it.id.seriesId == watchedDTO.seriesId &&
-                    it.id.season == watchedDTO.season &&
-                    it.id.episode == watchedDTO.episode
+            it.id.seriesId == seriesId &&
+                    it.id.season == season &&
+                    it.id.episode == episode
         }
 
         if (episodes.isEmpty()){
