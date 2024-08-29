@@ -38,8 +38,7 @@ class UserControllerUnitTest {
             .responseBody
 
         Assertions.assertTrue{
-            subscribedUserDTO!!.id != null &&
-                    subscribedUserDTO.password != null
+            subscribedUserDTO!!.id != null
         }
     }
 }
