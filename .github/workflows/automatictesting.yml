@@ -18,11 +18,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Start containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
       - name: Test
         run: |
-          docker-compose up
           chmod +x gradlew
           ./gradlew test --stacktrace
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
