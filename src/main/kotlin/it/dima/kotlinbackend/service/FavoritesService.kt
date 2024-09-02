@@ -19,7 +19,7 @@ class FavoritesService(val userService: UserService, val seriesService: SeriesSe
         val userOptional = userService.findByUserId(followDTO.userId)
 
         if(!userOptional.isPresent){
-            throw UserNotFoundException("User Not Found for the Id: ${followDTO.userId}")
+            throw UserNotFoundException("User Not Found")
         }
 
         val seriesOptional = seriesRepository.findById(followDTO.seriesId)

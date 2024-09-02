@@ -20,10 +20,10 @@ data class Episode(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id", referencedColumnName = "series_id", nullable = false, insertable=false, updatable=false)
-    val series: Series,
+    var series: Series,
 
     @ManyToMany(mappedBy = "episodes")
-    val users: MutableList<User> = mutableListOf(),
+    var users: MutableList<User> = mutableListOf(),
 ){
     override fun toString(): String {
         return "Episode(season=${id.season}, episode=${id.episode}, series='${series!!.seriesId}')"

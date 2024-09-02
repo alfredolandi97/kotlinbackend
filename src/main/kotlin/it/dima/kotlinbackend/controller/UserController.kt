@@ -30,6 +30,4 @@ class UserController(val userService: UserService) {
         return userService.updateProfilePicture(imageDTO)
     }
 
-
-
 }
