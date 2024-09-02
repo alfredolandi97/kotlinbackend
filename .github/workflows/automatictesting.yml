@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'master'
+  pull:
+    branches:
+      - 'master'
 
 jobs:
   test_with_gradle:
