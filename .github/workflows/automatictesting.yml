@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - 'master'
-  pull:
-    branches:
+  pull_request:
       - 'master'
 
 jobs:
