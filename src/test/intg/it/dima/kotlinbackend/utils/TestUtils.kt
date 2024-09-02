@@ -13,9 +13,9 @@ fun userDTO(
     full_name: String = "Test User",
     email: String = "test@gmail.com",
     password: String? = "iamatest",
-    meta_api_key: String = "",
-    google_api_key: String = "",
-    profile_picture: String = "",
+    meta_api_key: String? = null,
+    google_api_key: String? = null,
+    profile_picture: String? = null,
 ) = UserDTO(
     id,
     full_name,
