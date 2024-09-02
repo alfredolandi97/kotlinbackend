@@ -23,5 +23,6 @@ jobs:
 
       - name: Test
         run: |
+          docker-compose up
           chmod +x gradlew
           ./gradlew test --stacktrace
