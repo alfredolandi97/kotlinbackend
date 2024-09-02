@@ -35,9 +35,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Start containers
-        run: docker-compose up -d
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
@@ -45,10 +42,6 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew test --stacktrace
-
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose.yml" down
 
         env:
           # The hostname used to communicate with the PostgreSQL service container
