@@ -5,7 +5,6 @@ import it.dima.kotlinbackend.dto.UserDTO
 import it.dima.kotlinbackend.entity.User
 import it.dima.kotlinbackend.exception.InvalidSubscriptionException
 import it.dima.kotlinbackend.exception.UserNotFoundException
-import it.dima.kotlinbackend.exception.UserNotValidException
 import it.dima.kotlinbackend.repository.UserRepository
 import mu.KLogging
 import org.springframework.stereotype.Service
@@ -19,13 +18,11 @@ class UserService(val userRepository: UserRepository) {
     fun addUser(userDTO: UserDTO): UserDTO{
         //Checks about multiple identical subcriptions
         if(userDTO.meta_api_key != null || userDTO.google_api_key!= null) {
-            var userOptional: Optional<User>
+            var userOptional: Optional<User> = Optional.empty()
             if (userDTO.meta_api_key != null){
                 userOptional = userRepository.findByMetaApiKeyContaining(userDTO.meta_api_key)
             }else if(userDTO.google_api_key != null){
                 userOptional = userRepository.findByGoogleApiKeyContaining(userDTO.google_api_key)
-            }else{
-                throw UserNotValidException("Unrecognized user for this api key")
             }
 
             if (userOptional.isPresent) {
@@ -48,7 +45,7 @@ class UserService(val userRepository: UserRepository) {
             }
 
             //Checking if all the fields are valid
-            if(userDTO.full_name.isEmpty() || userDTO.email.isEmpty() || userDTO.password.isEmpty()){
+            if(userDTO.password.isEmpty()){
                 throw InvalidSubscriptionException("Invalid subscription fields")
             }
             val userResult = userRepository.findByEmailContaining(userDTO.email)

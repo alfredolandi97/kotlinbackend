@@ -1,11 +1,8 @@
 package it.dima.kotlinbackend.repository
 
-import it.dima.kotlinbackend.dto.UserDTO
 import it.dima.kotlinbackend.entity.User
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
 import java.util.*
 
 interface UserRepository: CrudRepository<User, Long> {
@@ -20,7 +17,4 @@ interface UserRepository: CrudRepository<User, Long> {
 
     @Query(value="SELECT * FROM seriestime_user WHERE email = ?1", nativeQuery = true)
     fun findByEmailContaining(email: String): Optional<User>
-
-    @Query(value="SELECT profile_picture FROM seriestime_user WHERE user_id = ?1", nativeQuery = true)
-    fun findImageByUserId(userId: Long): String?
 }

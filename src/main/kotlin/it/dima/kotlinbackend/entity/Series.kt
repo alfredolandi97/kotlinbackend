@@ -10,14 +10,14 @@ data class Series(
 
 
     @ManyToMany(mappedBy = "series")
-    val users: MutableList<User> = mutableListOf(),
+    var users: MutableList<User> = mutableListOf(),
 
     @OneToMany(
         mappedBy = "series",
         cascade = [(CascadeType.ALL)],
         orphanRemoval = true
     )
-    val episodes : MutableList<Episode> = mutableListOf(),
+    var episodes : MutableList<Episode> = mutableListOf(),
 ){
     override fun toString(): String {
         var usersString: String = ""

@@ -1,7 +1,6 @@
 package it.dima.kotlinbackend.dto
 
 import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
 
 data class UserDTO(
     val id: Long?,

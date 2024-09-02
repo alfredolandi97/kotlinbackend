@@ -21,6 +21,7 @@ class EpisodeService(
     */
     fun addEpisode(seriesId: Long, season: Int, episode: Int, user: User?): Episode {
         val seriesOptional = seriesService.findSeriesById(seriesId)
+
         if(!seriesOptional.isPresent){
             throw SeriesNotFoundException("That series does not have this season and this episode")
         }

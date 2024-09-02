@@ -3,8 +3,6 @@ package it.dima.kotlinbackend.service
 import it.dima.kotlinbackend.dto.EpisodeDTO
 import it.dima.kotlinbackend.dto.WatchedDTO
 import it.dima.kotlinbackend.entity.Episode
-import it.dima.kotlinbackend.entity.EpisodeCompositeKey
-import it.dima.kotlinbackend.entity.Series
 import it.dima.kotlinbackend.entity.User
 import it.dima.kotlinbackend.exception.EpisodeNotFoundException
 import it.dima.kotlinbackend.exception.EpisodeNotValidException
@@ -71,7 +69,7 @@ class WatchedService(val userService: UserService, val seriesService: SeriesServ
         val userOptional = userService.findByUserId(userId)
         val userEntity: User
         if(!userOptional.isPresent){
-            throw UserNotFoundException("This user seems it does not exist, unable to delete this favorite")
+            throw UserNotFoundException("This user seems it does not exist, unable to delete this watched episode")
         }else{
             userEntity = userOptional.get()
         }
@@ -110,7 +108,7 @@ class WatchedService(val userService: UserService, val seriesService: SeriesServ
         val userOptional = userService.findByUserId(userId)
         val userEntity: User
         if(!userOptional.isPresent){
-            throw UserNotFoundException("User does not exist, unable to delete this favorite")
+            throw UserNotFoundException("User does not exist, severe error")
         }else{
             userEntity = userOptional.get()
         }

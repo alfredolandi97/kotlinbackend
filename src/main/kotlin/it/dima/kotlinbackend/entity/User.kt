@@ -22,7 +22,7 @@ data class User(
         joinColumns = arrayOf(JoinColumn(name = "user_id")),
         inverseJoinColumns = arrayOf(JoinColumn(name = "series_id"))
     )
-    val series: MutableList<Series> = mutableListOf(),
+    var series: MutableList<Series> = mutableListOf(),
 
     @ManyToMany
     @JoinTable(
@@ -30,6 +30,6 @@ data class User(
         joinColumns = arrayOf(JoinColumn(name = "user_id")),
         inverseJoinColumns = arrayOf(JoinColumn(name = "episode"), JoinColumn(name = "season"), JoinColumn(name = "series_id"))
     )
-    val episodes: MutableList<Episode> = mutableListOf(),
+    var episodes: MutableList<Episode> = mutableListOf(),
 
 )

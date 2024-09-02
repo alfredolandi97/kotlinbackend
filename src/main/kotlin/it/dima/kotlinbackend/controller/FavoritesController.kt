@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 class FavoritesController(val favoritesService: FavoritesService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addCourse(@RequestBody @Valid followDTO: FollowDTO): FollowDTO {
+    fun addFavorite(@RequestBody @Valid followDTO: FollowDTO): FollowDTO {
         return favoritesService.addFavoriteSeries(followDTO)
     }
 

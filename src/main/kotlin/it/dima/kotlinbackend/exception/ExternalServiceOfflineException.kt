@@ -1,4 +1,3 @@
 package it.dima.kotlinbackend.exception
 
-class ExternalServiceOfflineException {
-}
+class ExternalServiceOfflineException(message: String): RuntimeException(message)

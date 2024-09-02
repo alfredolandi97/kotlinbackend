@@ -3,6 +3,7 @@ package it.dima.kotlinbackend.service
 import it.dima.kotlinbackend.dto.SeriesDTO
 import java.util.*
 import it.dima.kotlinbackend.entity.Series
+import it.dima.kotlinbackend.exception.ExternalServiceOfflineException
 import it.dima.kotlinbackend.repository.SeriesRepository
 import it.dima.kotlinbackend.utils.SeriesArrayReply
 import it.dima.kotlinbackend.utils.SeriesDetailsReply
@@ -19,9 +20,13 @@ class SeriesService(val seriesRepository: SeriesRepository) {
 
     fun getSeriesById(seriesId: Long): SeriesDTO {
 
-        val reply: SeriesDetailsReply = restTemplate.getForObject(
+        val reply: SeriesDetailsReply? = restTemplate.getForObject(
             "https://www.episodate.com/api/show-details?q=$seriesId", SeriesDetailsReply::class.java
-        )!!
+        )
+
+        if (reply == null) {
+            throw ExternalServiceOfflineException("Ops, something went wrong")
+        }
 
         return reply.let {
             SeriesDTO(
@@ -43,9 +48,13 @@ class SeriesService(val seriesRepository: SeriesRepository) {
 
     fun getMostPopular(): List<SeriesDTO> {
 
-        val reply: SeriesArrayReply = restTemplate.getForObject(
+        val reply: SeriesArrayReply? = restTemplate.getForObject(
             "https://www.episodate.com/api/most-popular?page=1", SeriesArrayReply::class.java
-        )!!
+        )
+
+        if (reply == null) {
+            throw ExternalServiceOfflineException("Ops, something went wrong")
+        }
 
         return reply.tv_shows.map {
             SeriesDTO(
@@ -66,9 +75,13 @@ class SeriesService(val seriesRepository: SeriesRepository) {
 
     fun getSeriesByQuery(query: String): List<SeriesDTO> {
 
-        val reply: SeriesArrayReply = restTemplate.getForObject(
+        val reply: SeriesArrayReply? = restTemplate.getForObject(
             "https://www.episodate.com/api/search?q=$query", SeriesArrayReply::class.java
-        )!!
+        )
+
+        if (reply == null) {
+            throw ExternalServiceOfflineException("Ops, something went wrong")
+        }
 
         return reply.tv_shows.map {
             SeriesDTO(

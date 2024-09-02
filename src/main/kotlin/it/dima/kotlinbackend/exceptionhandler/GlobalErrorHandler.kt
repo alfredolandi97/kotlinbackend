@@ -1,6 +1,5 @@
 package it.dima.kotlinbackend.exceptionhandler
 
-import it.dima.kotlinbackend.exception.SeriesNotValidException
 import it.dima.kotlinbackend.exception.UserNotValidException
 import mu.KLogging
 import org.springframework.http.HttpHeaders
@@ -46,13 +45,6 @@ class GlobalErrorHandler: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(UserNotValidException::class)
     fun handleUserNotValidException(ex: UserNotValidException, request: WebRequest): ResponseEntity<Any> {
-        logger.error("Exception observed: ${ex.message}", ex)
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(ex.message)
-    }
-
-    @ExceptionHandler(SeriesNotValidException::class)
-    fun handleSeriesNotValidException(ex: SeriesNotValidException, request: WebRequest): ResponseEntity<Any> {
         logger.error("Exception observed: ${ex.message}", ex)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ex.message)
