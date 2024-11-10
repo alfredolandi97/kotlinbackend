@@ -10,12 +10,14 @@ import it.dima.kotlinbackend.utils.SeriesDetailsReply
 import mu.KLogging
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.stereotype.Service
+import java.util.concurrent.TimeUnit
 
 @Service
 class SeriesService(val seriesRepository: SeriesRepository) {
 
 
-    val restTemplate = RestTemplateBuilder().build()
+    val restTemplate = RestTemplateBuilder()
+        .build()
     companion object: KLogging()
 
     fun getSeriesById(seriesId: Long): SeriesDTO {

@@ -5,11 +5,9 @@ spring:
     name: dima-user-backend
   datasource:
     driverClassName: org.postgresql.Driver
-    #url: jdbc:postgresql://dima-db.cdw00ck0wa6r.eu-north-1.rds.amazonaws.com:5432/seriestime
+    #Real credentials for the DB are hide for security and privacy issues
     url: jdbc:postgresql://localhost:5438/seriestime
-    #username: postgres
     username: postgres
-    #password: 3H1OH3deGVR3SrQPObLx
     password: postgres
   jpa:
 #    hibernate:
